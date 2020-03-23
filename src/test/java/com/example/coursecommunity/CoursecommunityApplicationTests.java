@@ -13,7 +13,7 @@ class CoursecommunityApplicationTests {
 
     @Test
     void testOrg(){
-        System.out.println(organizationRepository.save(new Organization("政府管理学院","http://www.sg.bnu.edu.cn/",true)).toString());
+        System.out.println(organizationRepository.save(new Organization("系统科学学院","https://sss.bnu.edu.cn/",true)).toString());
     }
 
     @Test
