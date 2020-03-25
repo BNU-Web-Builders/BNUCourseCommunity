@@ -30,15 +30,22 @@ public class User {
 
     private Long orgId;//外键连接Organization
 
+    private boolean state;//用户是否被激活
+
+    @Column(nullable = false)
+    private String code;//'激活码'
+
     public User() {
     }
 
-    public User(@NotEmpty(message = "昵称不能为空") @Size(min = 2, max = 16) String username, @NotEmpty(message = "学号不能为空") @Size(min = 2, max = 30) String account, @NotEmpty(message = "密码不能为空") @Size(max = 100) String password, String avatar, Long orgId) {
+    public User(@NotEmpty(message = "昵称不能为空") @Size(min = 2, max = 16) String username, @NotEmpty(message = "学号不能为空") @Size(min = 2, max = 30) String account, @NotEmpty(message = "密码不能为空") @Size(max = 100) String password, String avatar, Long orgId, boolean state, String code) {
         this.username = username;
         this.account = account;
         this.password = password;
         this.avatar = avatar;
         this.orgId = orgId;
+        this.state = state;
+        this.code = code;
     }
 
     public Long getId() {
@@ -89,6 +96,22 @@ public class User {
         this.orgId = orgId;
     }
 
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -98,6 +121,8 @@ public class User {
                 ", password='" + password + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", orgId=" + orgId +
+                ", state=" + state +
+                ", code='" + code + '\'' +
                 '}';
     }
 }

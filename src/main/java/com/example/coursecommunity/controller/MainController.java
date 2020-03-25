@@ -1,13 +1,18 @@
 package com.example.coursecommunity.controller;
 
+import com.example.coursecommunity.entity.User;
+import com.example.coursecommunity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MainController {
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -16,27 +21,38 @@ public class MainController {
      */
     @GetMapping("/")
     public String root(){
-        return "redirect:/login";
+        return "redirect:/index";
+    }
+
+    @GetMapping("/index")//主页面
+    public ModelAndView index(){
+        return new ModelAndView("index");
     }
 
     @GetMapping("/login")//登录界面
-    public ModelAndView testlogin(Model model){
-        model.addAttribute("hello","HelloWorld!");
-        model.addAttribute("hello2","123");
-        return new ModelAndView("login","Model",model);
+    public ModelAndView login(){
+        return new ModelAndView("login");
     }
 
-    @GetMapping("/loginCheck")
-    public String checkLogin(String username,String password){
-        if(username.equals("张三") && password.equals("123")){
-            return "redirect:/index";
-        }else
+    @GetMapping("/register")//注册页面
+    public ModelAndView register(){
+        return new ModelAndView("register");
+    }
+
+    @PostMapping("/register")//注册检测
+    public String registerUser(User user){
+        userService.registerUser(user);
         return "redirect:/login";
     }
 
-    @GetMapping("/index")//登录界面
-    public ModelAndView testlogin(){
-        return new ModelAndView("index");
+    @PostMapping("/login")//登录检测
+    public String loginUser(User user){
+        User user1=userService.login(user);
+        if(user1!=null) {
+            return "redirect:/index";
+        }else return "redirect:/login";
     }
+
+
 
 }
