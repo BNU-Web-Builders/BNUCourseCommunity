@@ -24,7 +24,14 @@ public interface UserService {
      * @param user
      * @return
      */
-    User registerUser(User user);
+    boolean registerUser(User user);
+
+    /**
+     * 激活账号
+     * @param user
+     * @return
+     */
+    User activeUser(User user);
 
     /**
      * 删除用户

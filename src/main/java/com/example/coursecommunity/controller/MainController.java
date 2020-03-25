@@ -2,7 +2,9 @@ package com.example.coursecommunity.controller;
 
 import com.example.coursecommunity.entity.User;
 import com.example.coursecommunity.service.UserService;
+import com.example.coursecommunity.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +42,16 @@ public class MainController {
     }
 
     @PostMapping("/register")//注册检测
-    public String registerUser(User user){
-        userService.registerUser(user);
+    public ResponseEntity<Response> registerUser(User user){
+        if(userService.registerUser(user)){
+            return ResponseEntity.ok().body(new Response(true,"注册成功！等待激活",user));
+        }
+        return ResponseEntity.ok().body(new Response(false,"注册失败！账号可能已被注册！"));
+    }
+
+    @PostMapping("/active")//激活账号
+    public String activeUser(User user){
+        userService.activeUser(user);
         return "redirect:/login";
     }
 

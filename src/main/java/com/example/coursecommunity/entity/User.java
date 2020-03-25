@@ -26,7 +26,7 @@ public class User {
     private String password;
 
     @Column(length = 200)
-    private String avatar;
+    private String avatar="";
 
     private Long orgId;//外键连接Organization
 
