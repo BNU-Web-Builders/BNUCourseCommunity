@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -50,9 +51,10 @@ public class MainController {
     }
 
     @PostMapping("/active")//激活账号
-    public String activeUser(User user){
-        String account="";
-        String code="";
+    public String activeUser(
+            String account,//学号 @RequestParam(value = "account", required = true, defaultValue = "000000000000")
+            String code//激活码
+    ){
         userService.activeUser(account,code);
         return "redirect:/login";
     }
