@@ -51,7 +51,9 @@ public class MainController {
 
     @PostMapping("/active")//激活账号
     public String activeUser(User user){
-        userService.activeUser(user);
+        String account="";
+        String code="";
+        userService.activeUser(account,code);
         return "redirect:/login";
     }
 

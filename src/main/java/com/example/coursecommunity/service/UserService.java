@@ -28,10 +28,9 @@ public interface UserService {
 
     /**
      * 激活账号
-     * @param user
      * @return
      */
-    User activeUser(User user);
+    User activeUser(String account,String code);
 
     /**
      * 删除用户

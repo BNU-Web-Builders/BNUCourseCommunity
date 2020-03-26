@@ -3,7 +3,6 @@ package com.example.coursecommunity.service;
 import com.example.coursecommunity.entity.User;
 import com.example.coursecommunity.repository.UserRepository;
 import com.example.coursecommunity.util.CodeUtil;
-import com.example.coursecommunity.util.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public User login(User user) {
@@ -40,18 +41,17 @@ public class UserServiceImpl implements UserService{
         user.setCode(code);
         //保存成功则通过线程的方式给用户发送一封邮件
         if(userRepository.save(user)!=null){
-            String email=user.getAccount()+"@mail.bnu.edu.cn";
-            new Thread(new MailUtil(email, code)).start();;
+            emailService.sendRegisterCode(user.getAccount(),code);
             return true;
         }
         return false;
     }
 
     @Override
-    public User activeUser(User user) {
-        Optional<User> user1=userRepository.findByAccount(user.getAccount());
+    public User activeUser(String account,String code) {
+        Optional<User> user1=userRepository.findByAccount(account);
         if(user1.isPresent()){
-            if(user1.get().getCode().equals(user.getCode())){
+            if(user1.get().getCode().equals(code)){
                 User user2=user1.get();
                 user2.setState(true);
                 return userRepository.save(user2);
