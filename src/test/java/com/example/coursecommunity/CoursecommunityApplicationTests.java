@@ -42,4 +42,10 @@ class CoursecommunityApplicationTests {
     void contextLoads() {
     }
 
+    @Test
+    void testRegisterPost(){
+        
+
+    }
+
 }
