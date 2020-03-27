@@ -44,4 +44,11 @@ public interface UserService {
      * @return
      */
     Optional<User> getUserById(Long id);
+
+    /**
+     * 查看账号是否已被注册
+     * @param account
+     * @return
+     */
+    boolean checkAccountPresent(String account);
 }

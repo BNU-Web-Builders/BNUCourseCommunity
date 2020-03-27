@@ -70,4 +70,11 @@ public class UserServiceImpl implements UserService{
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
+
+    @Override
+    public boolean checkAccountPresent(String account) {
+        if(userRepository.findByAccount(account).isPresent())
+        return true;
+        else return false;
+    }
 }

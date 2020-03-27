@@ -42,15 +42,32 @@ public class MainController {
         return new ModelAndView("register");
     }
 
-    @PostMapping("/register")//注册检测
-    public ResponseEntity<Response> registerUser(User user){
-        if(userService.registerUser(user)){
-            return ResponseEntity.ok().body(new Response(true,"注册成功！等待激活",user));
+    @PostMapping("/checkAccount")
+    public ResponseEntity<Response> checkAccount(String account){
+        try {
+            if(account.length()!=12){
+                return ResponseEntity.status(200).body(new Response(true,"请输入正确格式!"));
+            }
+            else
+            if(userService.checkAccountPresent(account)){
+                return ResponseEntity.status(200).body(new Response(true,"该账号已被注册!"));
+            }
+            return ResponseEntity.status(200).body(new Response(true,"恭喜您！该账号可以使用！"));
+        }catch (Exception e){
+            return ResponseEntity.status(500).body(new Response(false,e.getMessage()));
         }
-        return ResponseEntity.ok().body(new Response(false,"注册失败！账号可能已被注册！"));
+
     }
 
-    @PostMapping("/active")//激活账号
+    @PostMapping("/register")//注册
+    public String registerUser(User user){
+        if(userService.registerUser(user)){
+            return "redirect:/login";
+        }
+        return "redirect:/register";
+    }
+
+    @GetMapping("/active")//激活账号
     public String activeUser(
             String account,//学号 @RequestParam(value = "account", required = true, defaultValue = "000000000000")
             String code//激活码
