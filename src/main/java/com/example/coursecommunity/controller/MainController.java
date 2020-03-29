@@ -47,7 +47,7 @@ public class MainController {
     @GetMapping("/login-error")//登录出错
     public ModelAndView loginError(Model model){
         model.addAttribute("loginError",true);
-        model.addAttribute("errorMsg","登陆失败！用户名或密码错误！");
+        model.addAttribute("errorMsg","登陆失败！用户名或密码错误或账号未激活！");
         return new ModelAndView("login","Model",model);
     }
 

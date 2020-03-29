@@ -77,8 +77,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        Optional<User> user=userRepository.findByAccount(username);
-        if(user.isPresent())
+        if(user.isPresent() ){
+            User user1=user.get();
+            if(user1.isState())
             return user.get();
+            else
+                return new User("fake","fake",new BCryptPasswordEncoder().encode("fake"),"",null,false,"fake");
+        }
         else
             return new User("fake","fake",new BCryptPasswordEncoder().encode("fake"),"",null,false,"fake");
     }

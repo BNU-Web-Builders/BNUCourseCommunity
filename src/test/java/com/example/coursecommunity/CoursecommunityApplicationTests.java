@@ -1,6 +1,8 @@
 package com.example.coursecommunity;
 
+import com.example.coursecommunity.entity.Authority;
 import com.example.coursecommunity.entity.User;
+import com.example.coursecommunity.service.AuthorityService;
 import com.example.coursecommunity.service.EmailService;
 import com.example.coursecommunity.service.UserService;
 import com.example.coursecommunity.util.CodeUtil;
@@ -8,17 +10,35 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 class CoursecommunityApplicationTests {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthorityService authorityService;
     @Autowired
     private EmailService emailService;
 
 
     @Test
     void addUser(){
-        System.out.println(userService.saveOrUpdateUser(new User("Jess","201711260105","12345","",1L,false,"123456")));
+        User user=new User(
+                "Jess",//昵称
+                "201711260105",//学号
+                "12345",//密码
+                "",
+                1L,//学院编号，必须是Organization表里的ID值
+                true,//是否激活账号;没激活的无法登录
+                CodeUtil.generateUniqueCode()//激活码
+        );
+        List<Authority> authorities=new ArrayList<>();
+        authorities.add(authorityService.getAuthorityById(1L).get());//添加用户权限
+        //authorities.add(authorityService.getAuthorityById(2L).get());//添加管理员权限
+        user.setAuthorities(authorities);
+        System.out.println(userService.saveOrUpdateUser(user));
     }
 
 
