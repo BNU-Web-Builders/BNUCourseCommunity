@@ -1,6 +1,8 @@
 package com.example.coursecommunity.controller;
 
+import com.example.coursecommunity.entity.Authority;
 import com.example.coursecommunity.entity.User;
+import com.example.coursecommunity.service.AuthorityService;
 import com.example.coursecommunity.service.UserService;
 import com.example.coursecommunity.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class MainController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthorityService authorityService;
 
 
     /**
@@ -35,6 +42,13 @@ public class MainController {
     @GetMapping("/login")//登录界面
     public ModelAndView login(){
         return new ModelAndView("login");
+    }
+
+    @GetMapping("/login-error")//登录出错
+    public ModelAndView loginError(Model model){
+        model.addAttribute("loginError",true);
+        model.addAttribute("errorMsg","登陆失败！用户名或密码错误！");
+        return new ModelAndView("login","Model",model);
     }
 
     @GetMapping("/register")//注册页面
@@ -61,6 +75,9 @@ public class MainController {
 
     @PostMapping("/register")//注册
     public String registerUser(User user){
+        List<Authority> authorities=new ArrayList<>();
+        authorities.add(authorityService.getAuthorityById(1L).get());
+        user.setAuthorities(authorities);
         if(userService.registerUser(user)){
             return "redirect:/login";
         }
@@ -76,13 +93,6 @@ public class MainController {
         return "redirect:/login";
     }
 
-    @PostMapping("/login")//登录检测
-    public String loginUser(User user){
-        User user1=userService.login(user);
-        if(user1!=null) {
-            return "redirect:/index";
-        }else return "redirect:/login";
-    }
 
 
 

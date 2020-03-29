@@ -4,31 +4,27 @@ import com.example.coursecommunity.entity.User;
 import com.example.coursecommunity.repository.UserRepository;
 import com.example.coursecommunity.util.CodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private EmailService emailService;
 
-    @Override
-    public User login(User user) {
-        Optional<User> user1=userRepository.findByAccount(user.getAccount());
-        if (user1.isPresent()){
-            if(user1.get().getPassword().equals(user.getPassword())){
-                return user1.get();
-            }else return null;
-        }else return null;
-    }
 
     @Transactional
     @Override
     public User saveOrUpdateUser(User user) {
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -37,6 +33,7 @@ public class UserServiceImpl implements UserService{
     public boolean registerUser(User user) {
 
         String code= CodeUtil.generateUniqueCode();
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         user.setState(false);
         user.setCode(code);
         //保存成功则通过线程的方式给用户发送一封邮件
@@ -76,5 +73,13 @@ public class UserServiceImpl implements UserService{
         if(userRepository.findByAccount(account).isPresent())
         return true;
         else return false;
+    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+       Optional<User> user=userRepository.findByAccount(username);
+        if(user.isPresent())
+            return user.get();
+        else
+            return new User("fake","fake",new BCryptPasswordEncoder().encode("fake"),"",null,false,"fake");
     }
 }

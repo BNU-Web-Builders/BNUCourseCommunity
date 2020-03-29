@@ -5,12 +5,6 @@ import com.example.coursecommunity.entity.User;
 import java.util.Optional;
 
 public interface UserService {
-    /**
-     * 用户登录
-     * @param user
-     * @return
-     */
-    User login(User user);
 
     /**
      * 新增、编辑、保存用户

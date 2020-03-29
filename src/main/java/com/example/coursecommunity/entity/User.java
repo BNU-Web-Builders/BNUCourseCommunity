@@ -1,23 +1,31 @@
 package com.example.coursecommunity.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class User {
+public class User implements UserDetails, Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id//主键
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = "昵称不能为空")
-    @Size(min=2,max = 16)
-    @Column(nullable = false,length = 16)
+    @Size(min = 2, max = 16)
+    @Column(nullable = false, length = 16)
     private String username;
 
     @NotEmpty(message = "学号不能为空")
-    @Size(min=2,max = 30)
-    @Column(nullable = false,length = 30,unique = true)
+    @Size(min = 2, max = 30)
+    @Column(nullable = false, length = 30, unique = true)
     private String account;
 
     @NotEmpty(message = "密码不能为空")
@@ -26,7 +34,7 @@ public class User {
     private String password;
 
     @Column(length = 200)
-    private String avatar="";
+    private String avatar = "";
 
     private Long orgId;//外键连接Organization
 
@@ -35,7 +43,24 @@ public class User {
     @Column(nullable = false)
     private String code;//'激活码'
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+    private List<Authority> authorities;
+
+
     public User() {
+    }
+
+    public User(@NotEmpty(message = "昵称不能为空") @Size(min = 2, max = 16) String username, @NotEmpty(message = "学号不能为空") @Size(min = 2, max = 30) String account, @NotEmpty(message = "密码不能为空") @Size(max = 100) String password, String avatar, Long orgId, boolean state, String code, List<Authority> authorities) {
+        this.username = username;
+        this.account = account;
+        this.password = password;
+        this.avatar = avatar;
+        this.orgId = orgId;
+        this.state = state;
+        this.code = code;
+        this.authorities = authorities;
     }
 
     public User(@NotEmpty(message = "昵称不能为空") @Size(min = 2, max = 16) String username, @NotEmpty(message = "学号不能为空") @Size(min = 2, max = 30) String account, @NotEmpty(message = "密码不能为空") @Size(max = 100) String password, String avatar, Long orgId, boolean state, String code) {
@@ -111,6 +136,36 @@ public class User {
     public void setCode(String code) {
         this.code = code;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 
     @Override
     public String toString() {

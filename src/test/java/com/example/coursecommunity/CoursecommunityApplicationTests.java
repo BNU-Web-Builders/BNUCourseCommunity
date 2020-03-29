@@ -17,16 +17,13 @@ class CoursecommunityApplicationTests {
 
 
     @Test
-    void testRegister(){
-        User user=new User("Jess","201711260105","123456","",1L,false,"");
-        String email="201711260105"+"@mail.bnu.edu.cn";
-        String code= CodeUtil.generateUniqueCode();
-        System.out.println(userService.registerUser(user));
-
+    void addUser(){
+        System.out.println(userService.saveOrUpdateUser(new User("Jess","201711260105","12345","",1L,false,"123456")));
     }
 
+
     @Test
-    void testeEmail(){
+    void testEmail(){
         String code= CodeUtil.generateUniqueCode();
         System.out.println(emailService.sendRegisterCode("201711260105",code));
     }
