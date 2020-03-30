@@ -36,4 +36,18 @@ public interface EvaluationService {
      * @return
      */
     List<Evaluation> searchEvaluationByCourseId(long cid, Pageable pageable);
+
+    /**
+     * 点赞
+     * @param evaluationId
+     * @return
+     */
+    Evaluation createVote(Long evaluationId);
+
+    /**
+     * 取消点赞
+     * @param evaluationId
+     * @param voteId
+     */
+    void removeVote(Long evaluationId,Long voteId);
 }

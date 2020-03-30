@@ -9,9 +9,11 @@ import com.example.coursecommunity.util.CodeUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class CoursecommunityApplicationTests {
@@ -61,8 +63,11 @@ class CoursecommunityApplicationTests {
 
     @Test
     void testRegisterPost(){
-        
-
+        Optional<User> user=userService.getUserById(13L);
+        System.out.println(user.get().toString());
+        String userPwd=user.get().getPassword();
+        System.out.println(userPwd.equals(new BCryptPasswordEncoder().encode("12345")));
+        System.out.println(userPwd.equals(new BCryptPasswordEncoder().encode("123456")));
     }
 
 }

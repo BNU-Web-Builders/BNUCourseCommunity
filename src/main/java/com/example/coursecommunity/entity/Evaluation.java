@@ -6,6 +6,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class Evaluation {//点赞和踩尚未实现
@@ -50,13 +51,20 @@ public class Evaluation {//点赞和踩尚未实现
     @Column(length = 50)
     private String finalTestWay="";//	期末考核具体形式	varchar
 
+    @Column(name = "voteSize")
+    private Integer voteSize=0;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(name = "evaluation_vote",
+            joinColumns = @JoinColumn(name = "evaluation_id",referencedColumnName="id"),
+    inverseJoinColumns = @JoinColumn(name = "vote_id",referencedColumnName = "id"))
+    private List<Vote> votes;
+
+
     public Evaluation() {
     }
 
-    public Evaluation(Long userId, Long cId, Timestamp createTime, @NotEmpty(message = "评价文字内容不能为空") @Size(min = 2, max = 500) String content, boolean isTaken, @Min(0) @Max(5) int ranking, @Min(0) @Max(5) int homework, @Min(0) @Max(5) int difficulty, @Min(0) @Max(5) int gain, @Min(0) @Max(5) int noviceFriendly, @Min(0) @Max(5) int markRange, String finalTestWay) {
-        this.userId = userId;
-        this.cId = cId;
-        this.createTime = createTime;
+    public Evaluation(@NotEmpty(message = "评价文字内容不能为空") @Size(min = 2, max = 500) String content, boolean isTaken, @Min(0) @Max(5) int ranking, @Min(0) @Max(5) int homework, @Min(0) @Max(5) int difficulty, @Min(0) @Max(5) int gain, @Min(0) @Max(5) int noviceFriendly, @Min(0) @Max(5) int markRange, String finalTestWay) {
         this.content = content;
         this.isTaken = isTaken;
         this.ranking = ranking;
@@ -172,6 +180,53 @@ public class Evaluation {//点赞和踩尚未实现
         this.finalTestWay = finalTestWay;
     }
 
+    public Integer getVoteSize() {
+        return voteSize;
+    }
+
+    public void setVoteSize(Integer voteSize) {
+        this.voteSize = voteSize;
+    }
+
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
+        this.voteSize=this.votes.size();
+    }
+
+    /**
+     * 点赞
+     * @param vote
+     * @return
+     */
+    public boolean addVote(Vote vote){
+        boolean isExist=false;
+        for (int index=0;index<this.votes.size();index++){
+            if (this.votes.get(index).getUser().getId()==vote.getUser().getId()){
+                isExist=true;
+                break;
+            }
+        }
+        if (!isExist){
+            this.votes.add(vote);
+            this.voteSize=this.votes.size();
+        }
+        return isExist;
+    }
+
+    public void removeVote(Long voteId){
+        for (int index=0;index<this.votes.size();index++){
+            if(this.votes.get(index).getId()==voteId){
+                this.votes.remove(index);
+                break;
+            }
+        }
+        this.voteSize=this.votes.size();
+    }
+
     @Override
     public String toString() {
         return "Evaluation{" +
@@ -188,6 +243,8 @@ public class Evaluation {//点赞和踩尚未实现
                 ", noviceFriendly=" + noviceFriendly +
                 ", markRange=" + markRange +
                 ", finalTestWay='" + finalTestWay + '\'' +
+                ", voteSize=" + voteSize +
+                ", votes=" + votes +
                 '}';
     }
 }
