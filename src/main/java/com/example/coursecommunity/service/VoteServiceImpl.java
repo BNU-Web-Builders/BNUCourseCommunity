@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class VoteServiceImpl implements VoteService{
+public class VoteServiceImpl implements VoteService {
     @Autowired
     private VoteRepository voteRepository;
 

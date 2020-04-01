@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/test")
 public class TestController {
     @GetMapping("/index")//登录界面
-    public ModelAndView testLogin(){
+    public ModelAndView testLogin() {
         return new ModelAndView("index");
     }
 

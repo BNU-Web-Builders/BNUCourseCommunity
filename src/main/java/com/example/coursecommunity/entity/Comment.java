@@ -20,7 +20,7 @@ public class Comment {//点赞和踩尚未实现
     private Timestamp createTime;//评价创建时间,自动入库
 
     @NotEmpty(message = "评价文字内容不能为空")
-    @Size(min = 2,max = 300)
+    @Size(min = 2, max = 300)
     @Column(nullable = false)
     private String content;
 

@@ -32,30 +32,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public boolean registerUser(User user) {
 
-        String code= CodeUtil.generateUniqueCode();
+        String code = CodeUtil.generateUniqueCode();
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         user.setState(false);
         user.setCode(code);
         //保存成功则通过线程的方式给用户发送一封邮件
-        if(userRepository.save(user)!=null){
-            emailService.sendRegisterCode(user.getAccount(),code);
+        if (userRepository.save(user) != null) {
+            emailService.sendRegisterCode(user.getAccount(), code);
             return true;
         }
         return false;
     }
 
     @Override
-    public User activeUser(String account,String code) {
-        Optional<User> user1=userRepository.findByAccount(account);
-        if(user1.isPresent()){
-            if(user1.get().getCode().equals(code)){
-                User user2=user1.get();
+    public User activeUser(String account, String code) {
+        Optional<User> user1 = userRepository.findByAccount(account);
+        if (user1.isPresent()) {
+            if (user1.get().getCode().equals(code)) {
+                User user2 = user1.get();
                 user2.setState(true);
                 return userRepository.save(user2);
-            }
-            else return null;
-        }
-        else return null;
+            } else return null;
+        } else return null;
     }
 
     @Override
@@ -70,21 +68,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public boolean checkAccountPresent(String account) {
-        if(userRepository.findByAccount(account).isPresent())
-        return true;
+        if (userRepository.findByAccount(account).isPresent())
+            return true;
         else return false;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       Optional<User> user=userRepository.findByAccount(username);
-        if(user.isPresent() ){
-            User user1=user.get();
-            if(user1.isState())
-            return user.get();
+        Optional<User> user = userRepository.findByAccount(username);
+        if (user.isPresent()) {
+            User user1 = user.get();
+            if (user1.isState())
+                return user.get();
             else
-                return new User("fake","fake",new BCryptPasswordEncoder().encode("fake"),"",null,false,"fake");
-        }
-        else
-            return new User("fake","fake",new BCryptPasswordEncoder().encode("fake"),"",null,false,"fake");
+                return new User("fake", "fake", new BCryptPasswordEncoder().encode("fake"), "", null, false, "fake");
+        } else
+            return new User("fake", "fake", new BCryptPasswordEncoder().encode("fake"), "", null, false, "fake");
     }
 }

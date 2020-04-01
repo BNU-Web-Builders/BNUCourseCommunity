@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/fonts/**", "/register").permitAll()  // 虽都可以访问
-                .antMatchers("/users/**","/index").hasRole("USER")   // 需要相应的角色才能访问
+                .antMatchers("/users/**", "/index").hasRole("USER")   // 需要相应的角色才能访问
                 .antMatchers("/admins/**").hasRole("ADMIN")   // 需要相应的角色才能访问
                 .and()
                 .formLogin()   //基于 Form 表单登录验证
@@ -41,14 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 认证信息管理
+     *
      * @param auth
      * @throws Exception
      */
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         try {
             auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-        }catch (InternalAuthenticationServiceException e){
+        } catch (InternalAuthenticationServiceException e) {
             System.out.println("error!");
         }
 

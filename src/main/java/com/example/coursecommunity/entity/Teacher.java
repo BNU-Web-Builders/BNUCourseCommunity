@@ -14,8 +14,8 @@ public class Teacher {
     private String tCode;
 
     @NotEmpty(message = "教师姓名不能为空")
-    @Size(min=1,max = 16)
-    @Column(nullable = false,length = 16)
+    @Size(min = 1, max = 16)
+    @Column(nullable = false, length = 16)
     private String name;
 
     @Column(length = 10)

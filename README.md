@@ -11,6 +11,7 @@
 2020.03.29|16：41|SpringSecurity完结散花！现在必须登录才能查看辣  
 2020.03.30|23：53|点赞建设完毕！头像服务器集成！  
   
+  
 ## 备注  
 1.DBScripts：用于存放数据库脚本  
 2.resource：用于存放前端文件，其中template存HTML；static存图片、JS、CSS等文件  

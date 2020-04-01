@@ -11,13 +11,13 @@ public class Organization {
     private Long id;
 
     @NotEmpty(message = "学院机构名字不能为空")
-    @Size(min=2,max = 50)
-    @Column(nullable = false,length = 50)
+    @Size(min = 2, max = 50)
+    @Column(nullable = false, length = 50)
     private String name;
 
     @NotEmpty(message = "学院机构官网不能为空")
-    @Size(min=1,max = 200)
-    @Column(nullable = false,length = 200)
+    @Size(min = 1, max = 200)
+    @Column(nullable = false, length = 200)
     private String url;
 
     private boolean isSchool;

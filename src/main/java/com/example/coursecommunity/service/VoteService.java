@@ -9,6 +9,7 @@ public interface VoteService {
 
     /**
      * 根据id获取Vote
+     *
      * @param id
      * @return
      */
@@ -16,6 +17,7 @@ public interface VoteService {
 
     /**
      * 删除Vote
+     *
      * @param id
      */
     void removeVote(Long id);

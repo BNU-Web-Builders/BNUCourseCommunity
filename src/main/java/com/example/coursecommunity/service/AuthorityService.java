@@ -7,6 +7,7 @@ import java.util.Optional;
 public interface AuthorityService {
     /**
      * 根据ID查询角色
+     *
      * @param id
      * @return
      */

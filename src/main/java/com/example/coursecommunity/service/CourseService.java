@@ -10,6 +10,7 @@ public interface CourseService {
 
     /**
      * 新增、编辑、保存课程
+     *
      * @param course
      * @return
      */
@@ -18,12 +19,14 @@ public interface CourseService {
 
     /**
      * 删除课程
+     *
      * @param id
      */
     void removeCourse(Long id);
 
     /**
      * 根据id获取课程信息
+     *
      * @param id
      * @return
      */
@@ -31,6 +34,7 @@ public interface CourseService {
 
     /**
      * 课程信息的模糊查询
+     *
      * @param keyword
      * @return
      */
@@ -38,6 +42,7 @@ public interface CourseService {
 
     /**
      * 课程信息的高级查询
+     *
      * @param formation
      * @return
      */

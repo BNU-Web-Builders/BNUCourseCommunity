@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface EvaluationService {
     /**
      * 新增、编辑、保存评价
+     *
      * @param evaluation
      * @return
      */
@@ -18,12 +19,14 @@ public interface EvaluationService {
 
     /**
      * 删除评价
+     *
      * @param id
      */
     void removeEvaluation(Long id);
 
     /**
      * 根据id获取评价信息
+     *
      * @param id
      * @return
      */
@@ -31,6 +34,7 @@ public interface EvaluationService {
 
     /**
      * 根据课程ID获取评价
+     *
      * @param cid
      * @param pageable
      * @return
@@ -39,6 +43,7 @@ public interface EvaluationService {
 
     /**
      * 点赞
+     *
      * @param evaluationId
      * @return
      */
@@ -46,8 +51,9 @@ public interface EvaluationService {
 
     /**
      * 取消点赞
+     *
      * @param evaluationId
      * @param voteId
      */
-    void removeVote(Long evaluationId,Long voteId);
+    void removeVote(Long evaluationId, Long voteId);
 }

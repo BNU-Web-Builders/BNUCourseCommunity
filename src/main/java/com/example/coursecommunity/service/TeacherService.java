@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface TeacherService {
     /**
      * 新增、编辑、保存教师信息
+     *
      * @param teacher
      * @return
      */
@@ -17,12 +18,14 @@ public interface TeacherService {
 
     /**
      * 删除评论
+     *
      * @param id
      */
     void removeTeacher(Long id);
 
     /**
      * 根据id获取教师信息
+     *
      * @param id
      * @return
      */

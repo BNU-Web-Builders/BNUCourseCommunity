@@ -20,4 +20,5 @@ create table user
 create index orgId
     on user (orgId);
 
-INSERT INTO coursecommunity.user (id, account, avatar, orgId, password, username, code, state) VALUES (1, '201711260105', '', 1, '123456', 'ahhhhhh', '1222222', true);
+INSERT INTO coursecommunity.user (id, account, avatar, orgId, password, username, code, state)
+VALUES (1, '201711260105', '', 1, '123456', 'ahhhhhh', '1222222', true);

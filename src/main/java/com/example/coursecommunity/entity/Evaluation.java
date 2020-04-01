@@ -23,41 +23,41 @@ public class Evaluation {//点赞和踩尚未实现
     private Timestamp createTime;//评价创建时间,自动入库
 
     @NotEmpty(message = "评价文字内容不能为空")
-    @Size(min = 2,max = 500)
+    @Size(min = 2, max = 500)
     @Column(nullable = false)
     private String content;
 
-    private  boolean isTaken;//	是否上完这门课
+    private boolean isTaken;//	是否上完这门课
 
     @Min(0)
     @Max(5)
-    private int ranking=0;//	综合评分	5分制
+    private int ranking = 0;//	综合评分	5分制
     @Min(0)
     @Max(5)
-    private int homework=0;//	作业多少	5分制
+    private int homework = 0;//	作业多少	5分制
     @Min(0)
     @Max(5)
-    private int difficulty=0;//	课程难度	5分制
+    private int difficulty = 0;//	课程难度	5分制
     @Min(0)
     @Max(5)
-    private int gain=0;//	收获大小	5分制
+    private int gain = 0;//	收获大小	5分制
     @Min(0)
     @Max(5)
-    private int noviceFriendly=0;//	小白友好度（是否需要基础）	5分制
+    private int noviceFriendly = 0;//	小白友好度（是否需要基础）	5分制
     @Min(0)
     @Max(5)
-    private int markRange=0;//	期末给分情况	5分制,(不合格，60+，70+，80+，90+）
+    private int markRange = 0;//	期末给分情况	5分制,(不合格，60+，70+，80+，90+）
 
     @Column(length = 50)
-    private String finalTestWay="";//	期末考核具体形式	varchar
+    private String finalTestWay = "";//	期末考核具体形式	varchar
 
     @Column(name = "voteSize")
-    private Integer voteSize=0;
+    private Integer voteSize = 0;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "evaluation_vote",
-            joinColumns = @JoinColumn(name = "evaluation_id",referencedColumnName="id"),
-    inverseJoinColumns = @JoinColumn(name = "vote_id",referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "evaluation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "vote_id", referencedColumnName = "id"))
     private List<Vote> votes;
 
 
@@ -194,37 +194,38 @@ public class Evaluation {//点赞和踩尚未实现
 
     public void setVotes(List<Vote> votes) {
         this.votes = votes;
-        this.voteSize=this.votes.size();
+        this.voteSize = this.votes.size();
     }
 
     /**
      * 点赞
+     *
      * @param vote
      * @return
      */
-    public boolean addVote(Vote vote){
-        boolean isExist=false;
-        for (int index=0;index<this.votes.size();index++){
-            if (this.votes.get(index).getUser().getId()==vote.getUser().getId()){
-                isExist=true;
+    public boolean addVote(Vote vote) {
+        boolean isExist = false;
+        for (int index = 0; index < this.votes.size(); index++) {
+            if (this.votes.get(index).getUser().getId() == vote.getUser().getId()) {
+                isExist = true;
                 break;
             }
         }
-        if (!isExist){
+        if (!isExist) {
             this.votes.add(vote);
-            this.voteSize=this.votes.size();
+            this.voteSize = this.votes.size();
         }
         return isExist;
     }
 
-    public void removeVote(Long voteId){
-        for (int index=0;index<this.votes.size();index++){
-            if(this.votes.get(index).getId()==voteId){
+    public void removeVote(Long voteId) {
+        for (int index = 0; index < this.votes.size(); index++) {
+            if (this.votes.get(index).getId() == voteId) {
                 this.votes.remove(index);
                 break;
             }
         }
-        this.voteSize=this.votes.size();
+        this.voteSize = this.votes.size();
     }
 
     @Override

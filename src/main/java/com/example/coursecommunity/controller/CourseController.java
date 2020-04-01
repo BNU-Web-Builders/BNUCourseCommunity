@@ -11,18 +11,20 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/course")
 public class CourseController {
     //一、以下是页面
+
     /**
      * 课程详细信息
+     *
      * @param id
      * @param model
      * @return
      */
     @GetMapping("/detail/{id}")
     public ModelAndView courseDetail(
-            @PathVariable("id")String id,
+            @PathVariable("id") String id,
             Model model
-    ){
-        return new ModelAndView("course-page","Model",model);
+    ) {
+        return new ModelAndView("course-page", "Model", model);
     }
 
 

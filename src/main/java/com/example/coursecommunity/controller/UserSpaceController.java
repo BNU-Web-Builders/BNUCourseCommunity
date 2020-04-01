@@ -35,13 +35,13 @@ public class UserSpaceController {
     @GetMapping("/{account}/profile")
     @PreAuthorize("authentication.principal.account.equals(#account)")
     public ModelAndView profile(
-            @PathVariable("account")String account,
+            @PathVariable("account") String account,
             Model model
-    ){
-        User user=(User)userDetailsService.loadUserByUsername(account);
-        model.addAttribute("user",user);
-        model.addAttribute("fileServerUrl",fileServerUrl);
-        return new ModelAndView("profile","Model",model);
+    ) {
+        User user = (User) userDetailsService.loadUserByUsername(account);
+        model.addAttribute("user", user);
+        model.addAttribute("fileServerUrl", fileServerUrl);
+        return new ModelAndView("profile", "Model", model);
     }
 
     //查看关注课程信息页面
@@ -52,25 +52,26 @@ public class UserSpaceController {
     @PostMapping("/{account}/profile")
     @PreAuthorize("authentication.principal.account.equals(#account)")//只允许改昵称、学院、密码,头像修改见下一个Controller
     public String saveProfile(
-            @PathVariable("account")String account,
+            @PathVariable("account") String account,
             User user
-    ){
-        User originalUser=userService.getUserById(user.getId()).get();
+    ) {
+        User originalUser = userService.getUserById(user.getId()).get();
         originalUser.setUsername(user.getUsername());
         originalUser.setOrgId(user.getOrgId());
         //判断密码是否做了变更
-        String rawPassword=originalUser.getPassword();
-        String encodePassword=new BCryptPasswordEncoder().encode(user.getPassword());
-        boolean isMatch=rawPassword.equals(encodePassword);
-        if(!isMatch){
+        String rawPassword = originalUser.getPassword();
+        String encodePassword = new BCryptPasswordEncoder().encode(user.getPassword());
+        boolean isMatch = rawPassword.equals(encodePassword);
+        if (!isMatch) {
             originalUser.setPassword(encodePassword);
         }
         userService.saveOrUpdateUser(originalUser);
-        return "redirect:/userSp/"+account+"/profile";
+        return "redirect:/userSp/" + account + "/profile";
     }
 
     /**
      * 保存头像
+     *
      * @param account
      * @param user
      * @return
@@ -80,12 +81,12 @@ public class UserSpaceController {
     public ResponseEntity<Response> saveAvatar(
             @PathVariable("account") String account,
             @RequestBody User user
-    ){
-        String avatarUrl=user.getAvatar();
-        User originalUser=userService.getUserById(user.getId()).get();
+    ) {
+        String avatarUrl = user.getAvatar();
+        User originalUser = userService.getUserById(user.getId()).get();
         originalUser.setAvatar(avatarUrl);
         userService.saveOrUpdateUser(originalUser);
-        return ResponseEntity.ok().body(new Response(true,"处理成功",avatarUrl));
+        return ResponseEntity.ok().body(new Response(true, "处理成功", avatarUrl));
     }
 
 

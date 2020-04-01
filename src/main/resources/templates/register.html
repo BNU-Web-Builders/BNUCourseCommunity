@@ -14,54 +14,57 @@
     <script type="text/javascript">
         //onblur失去焦点的值
         //定义一个变量用于存放XMLHttpRequest对象
-             var xmlHttp;
-             function checkAccount(){
-                    //获取文本框的值
-                    var account=document.getElementById("account").value;
-                 if(!/^[0-9]+$/.test(account)|| account.length !== 12){
-                     document.getElementById("errorAccount").innerHTML = "请填写有效邮箱！";
-                 }
-                 else
-                    if (window.XMLHttpRequest) {
-                            xmlHttp = new XMLHttpRequest();
-                        } else {// code for IE6, IE5
-                            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-                         }
-                    //服务器地址和数据
-                    var url = "checkAccount";
-                    //规定请求的类型、URL 以及是否异步处理请求。
-                    xmlHttp.open("POST",url,true);
-                     //向请求添加 HTTP 头。这个必加，是提交到后台的方式
-                     xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                  //将请求发送到服务器
-                    xmlHttp.send("account="+account);
-                    //回调函数
-                    xmlHttp.onreadystatechange=function(){
-                            if (xmlHttp.readyState==4 && xmlHttp.status==200){
-                                var result = xmlHttp.responseText;
-                                var response = JSON.parse(result);
-                                var object = response.message;
-                                document.getElementById("errorAccount").innerHTML = object;
-                                 }
-                         }//给div设置内容
-                    //document.getElementById("errorAccount").innerHTML=account;
-                 }
+        var xmlHttp;
+
+        function checkAccount() {
+            //获取文本框的值
+            var account = document.getElementById("account").value;
+            if (!/^[0-9]+$/.test(account) || account.length !== 12) {
+                document.getElementById("errorAccount").innerHTML = "请填写有效邮箱！";
+            } else if (window.XMLHttpRequest) {
+                xmlHttp = new XMLHttpRequest();
+            } else {// code for IE6, IE5
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            //服务器地址和数据
+            var url = "checkAccount";
+            //规定请求的类型、URL 以及是否异步处理请求。
+            xmlHttp.open("POST", url, true);
+            //向请求添加 HTTP 头。这个必加，是提交到后台的方式
+            xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            //将请求发送到服务器
+            xmlHttp.send("account=" + account);
+            //回调函数
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    var result = xmlHttp.responseText;
+                    var response = JSON.parse(result);
+                    var object = response.message;
+                    document.getElementById("errorAccount").innerHTML = object;
+                }
+            }//给div设置内容
+            //document.getElementById("errorAccount").innerHTML=account;
+        }
     </script>
 </head>
 <body style="background-color: #cbdeda">
 
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark justify-content-between" style="background-color: #0c5460;position: sticky;">
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark justify-content-between"
+     style="background-color: #0c5460;position: sticky;">
     <a class="navbar-brand" href="#">BNU评课社区</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse row navbar-collapse col-lg-8 col-sm-5 col-md-5 justify-content-lg-between pr-lg-0" id="navbarSupportedContent">
+    <div class="collapse row navbar-collapse col-lg-8 col-sm-5 col-md-5 justify-content-lg-between pr-lg-0"
+         id="navbarSupportedContent">
         <form class="form-inline my-2 my-lg-0 col-lg-8 col-md-3 col-sm-3">
             <input class="form-control mr-sm-2 col-lg-8" type="search" placeholder="Search" aria-label="Search">
         </form>
         <ul class="navbar-nav row col-lg-4 col-md-2 col-sm-2 justify-content-lg-end justify-content-md-around justify-content-sm-around">
             <li class="nav-item pl-lg-2 col-lg-1 col-sm-1 col-md-1">
-                <svg class="bi bi-bell-fill float-right" width="25" height="25" viewBox="0 0 16 16" fill="#af9556" xmlns="http://www.w3.org/2000/svg">
+                <svg class="bi bi-bell-fill float-right" width="25" height="25" viewBox="0 0 16 16" fill="#af9556"
+                     xmlns="http://www.w3.org/2000/svg">
                     <path d="M8 16a2 2 0 002-2H6a2 2 0 002 2zm.995-14.901a1 1 0 10-1.99 0A5.002 5.002 0 003 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                 </svg>
             </li>
@@ -87,11 +90,13 @@
                 <h3 class="text-info">注册新账户</h3>
                 <span class="text-muted">昵称：</span>
                 <label for="username" class="sr-only">Username</label>
-                <input type="text" id="username" name="username" class="form-control" placeholder="" required="" autofocus="">
+                <input type="text" id="username" name="username" class="form-control" placeholder="" required=""
+                       autofocus="">
                 <span class="text-muted">师大邮箱：<span id="errorAccount"></span></span>
                 <label for="account" class="sr-only">Email address</label>
                 <div class="input-group">
-                    <input type="text" id="account" name="account" class="form-control" placeholder="" required="" autofocus="" onblur="checkAccount()">
+                    <input type="text" id="account" name="account" class="form-control" placeholder="" required=""
+                           autofocus="" onblur="checkAccount()">
                     <div class="input-group-append">
                         <span class="input-group-text">@mail.bnu.edu.cn</span>
                     </div>
@@ -101,7 +106,8 @@
                 <input type="password" id="password" name="password" class="form-control" placeholder="" required="">
                 <span class="text-muted">请再输一遍密码：</span>
                 <label for="passwordagain" class="sr-only">Password again</label>
-                <input type="password" id="passwordagain" name="passwordagain" class="form-control" placeholder="" required="">
+                <input type="password" id="passwordagain" name="passwordagain" class="form-control" placeholder=""
+                       required="">
                 <span class="small">点击注册后您的师大邮箱将收到一封验证邮件，如果没有找到请去垃圾邮件看一看</span>
                 <br>
                 <input class="btn btn-lg btn-success btn-block" type="submit" id="btn-submit" value="注 册">
@@ -122,19 +128,17 @@
 <!-- 判断表单信息合法性 合法是指：1、两次输入密码一样 2、若邮箱用户名全是数字，那么必须是12位-->
 <script type="text/javascript">
     $(document).ready(function () {
-        $( "#sign-up-info" ).submit(function( event ) {
+        $("#sign-up-info").submit(function (event) {
             var pwd1 = document.getElementById("password").value;
             var pwd2 = document.getElementById("passwordagain").value;
             var email_text = document.getElementById("account").value;
-            if(pwd1 !== pwd2) {
-                alert( "两次输入的密码不同！" );
+            if (pwd1 !== pwd2) {
+                alert("两次输入的密码不同！");
                 return false;
-            }
-            else if(/^[0-9]+$/.test(email_text) && email_text.length !== 12){
-                alert( "请填写有效的邮箱！" );
+            } else if (/^[0-9]+$/.test(email_text) && email_text.length !== 12) {
+                alert("请填写有效的邮箱！");
                 return false;
-            }
-            else
+            } else
                 return true;
         });
     });

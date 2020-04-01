@@ -17,8 +17,8 @@ public class Course {
     private String cCode;
 
     @NotEmpty(message = "课程名不能为空")
-    @Size(min=1,max = 100)
-    @Column(nullable = false,length = 100)
+    @Size(min = 1, max = 100)
+    @Column(nullable = false, length = 100)
     private String name;
 
     private Long orgId;

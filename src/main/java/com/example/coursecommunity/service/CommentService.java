@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface CommentService {
     /**
      * 新增、编辑、保存评论
+     *
      * @param comment
      * @return
      */
@@ -18,12 +19,14 @@ public interface CommentService {
 
     /**
      * 删除评论
+     *
      * @param id
      */
     void removeComment(Long id);
 
     /**
      * 根据id获取评论信息
+     *
      * @param id
      * @return
      */
@@ -31,6 +34,7 @@ public interface CommentService {
 
     /**
      * 根据评价ID获取评论
+     *
      * @param eid
      * @param pageable
      * @return
