@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,6 +88,7 @@
         <!-- 右边的表单-->
         <div class="col-lg-4">
             <form class="form-signup" id="sign-up-info" action="/register" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="crsfToken"/>
                 <h3 class="text-info">注册新账户</h3>
                 <span class="text-muted">昵称：</span>
                 <label for="username" class="sr-only">Username</label>
