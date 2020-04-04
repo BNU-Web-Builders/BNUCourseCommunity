@@ -61,9 +61,9 @@ public class MainController {
     public ResponseEntity<Response> checkAccount(String account) {
         try {
             if (account.length() != 12) {
-                return ResponseEntity.status(200).body(new Response(true, "请输入正确格式!"));
+                return ResponseEntity.status(200).body(new Response(false, "请输入正确格式!"));
             } else if (userService.checkAccountPresent(account)) {
-                return ResponseEntity.status(200).body(new Response(true, "该账号已被注册!"));
+                return ResponseEntity.status(200).body(new Response(false, "该账号已被注册!"));
             }
             return ResponseEntity.status(200).body(new Response(true, "恭喜您！该账号可以使用！"));
         } catch (Exception e) {
