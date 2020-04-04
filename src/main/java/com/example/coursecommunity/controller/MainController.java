@@ -57,7 +57,7 @@ public class MainController {
         return new ModelAndView("register");
     }
 
-    @PostMapping("/checkAccount")
+    @GetMapping("/checkAccount")
     public ResponseEntity<Response> checkAccount(String account) {
         try {
             if (account.length() != 12) {

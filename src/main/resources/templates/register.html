@@ -30,11 +30,11 @@
             //服务器地址和数据
             var url = "checkAccount";
             //规定请求的类型、URL 以及是否异步处理请求。
-            xmlHttp.open("POST", url, true);
+            xmlHttp.open("GET", url+"?account="+account, true);
             //向请求添加 HTTP 头。这个必加，是提交到后台的方式
             xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             //将请求发送到服务器
-            xmlHttp.send("account=" + account);
+            xmlHttp.send();
             //回调函数
             xmlHttp.onreadystatechange = function () {
                 if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
