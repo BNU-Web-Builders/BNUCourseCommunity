@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <title>登录</title>
-</head>
+      lang="en">
+
+<!-- 用replace进行head的封装和复用 -->
+<div th:replace="head"></div>
+
 <body>
-<form action="/login" method="post">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    用户名：<input type="text" name="username"/><br>
-    密 码：<input type="password" name="password">
-    <div>
-        <label for="remember-me">记住我</label>
-        <input type="checkbox" name="remember-me" id="remember-me">
+
+<div th:replace="nav_not_login"></div>
+
+<div class="container w-75 py-lg-3 justify-content-lg-between" style="background-color: #ffffff;">
+    <div class="d-lg-flex justify-content-lg-center">
+
+        <!-- 左边的一些文字 -->
+        <div class="col-lg-4 text-lg-left pt-lg-3">
+            <h2>自由评课</h2>
+            <p class="lead">我们致力于打造一个自由、客观、百花齐放的课程评价平台。这里的文字太少了，还要再多写一些...</p>
+        </div>
+
+
+        <!-- 右边的表单-->
+        <div class="col-lg-4">
+            <form class="form-signup" id="sign-up-info" action="/login" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="crsfToken"/>
+                <h3 class="text-info">登陆</h3>
+                <span class="text-muted">学号：</span>
+                <label for="username" class="sr-only">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="" required=""
+                       autofocus="">
+
+                <span class="text-muted">密码：</span>
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="" required="">
+                <br>
+                <input class="btn btn-lg btn-success btn-block" type="submit" id="btn-submit" value="登 陆">
+                <p class="mt-5 mb-3 text-muted">© 2020-</p>
+            </form>
+            <div th:if="${loginError}">
+                <p th:text="${errorMsg}"></p>
+            </div>
+        </div>
     </div>
-    <input type="submit" value="提交">
-</form>
-<div th:if="${loginError}">
-    <p th:text="${errorMsg}"></p>
+
 </div>
 
 </body>

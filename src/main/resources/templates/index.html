@@ -1,45 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      lang="en"
 >
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="BNU自由评价课程的平台">
-    <meta name="keywords" content="BNU,评课,课程">
-    <meta name="author" content="cruelkiddy, JessZHENG, chushidepao">
-    <title>BNU评课社区</title>
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body style="background-color: #cbdeda">
 
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark justify-content-between"
-     style="background-color: #0c5460;position: sticky;">
-    <a class="navbar-brand" href="#">BNU评课社区</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse row navbar-collapse col-lg-8 col-sm-5 col-md-5 justify-content-lg-between pr-lg-0"
-         id="navbarSupportedContent">
-        <form class="form-inline my-2 my-lg-0 col-lg-8 col-md-3 col-sm-3">
-            <input class="form-control mr-sm-2 col-lg-8" type="search" placeholder="Search" aria-label="Search">
-        </form>
-        <ul class="navbar-nav row col-lg-4 col-md-2 col-sm-2 justify-content-lg-end justify-content-md-around justify-content-sm-around">
-            <li class="nav-item pl-lg-2 col-lg-1 col-sm-1 col-md-1">
-                <svg class="bi bi-bell-fill float-right" width="25" height="25" viewBox="0 0 16 16" fill="#af9556"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 16a2 2 0 002-2H6a2 2 0 002 2zm.995-14.901a1 1 0 10-1.99 0A5.002 5.002 0 003 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                </svg>
-            </li>
-            <li class="nav-item my-lg-auto pl-lg-4 pr-lg-3 col-lg-1 col-sm-1 col-md-1">
-                <img src="../static/img/avator.png" class="rounded float-right" alt="..." width="25" height="25">
-            </li>
-        </ul>
-    </div>
-</nav>
+<!-- 用replace进行head的封装和复用 -->
+<div th:replace="head"></div>
+
+<body>
+
+<!-- 用replace进行导航栏的封装和复用 -->
+<div th:replace="nav_not_login"></div>
+
 <div class="container w-75 py-lg-3" style="background-color: #ffffff;">
     <div class="container row justify-content-lg-between my-lg-5">
         <div class="col col-lg-6">
